@@ -854,29 +854,19 @@ class _BaseAgentAdapter(
         instructions_text: str | None = None
         function_tools: list[ToolDefinition] | None = None
         output_tools: list[ToolDefinition] | None = None
-        for message in messages:
-            if not isinstance(message, ModelRequest):
-                continue
-
-            if instructions_text is None and isinstance(message.instructions, str):
-                instructions_text = message.instructions
-
-            params = message.model_request_parameters
-            if params is None:
-                continue
-
+        if hasattr(self.agent.model,'last_model_request_parameters'):
+            params = self.agent.model.last_model_request_parameters
+        else:
+            params = None
+        instructions_text = self.agent.model._get_instructions(messages)
+        if params is not None:
+            if instructions_text is None and params.instructions:
+                instructions_text = params.instructions.text
             if function_tools is None and params.function_tools:
                 function_tools = list(params.function_tools)
-
             if output_tools is None and params.output_tools:
                 output_tools = list(params.output_tools)
 
-            if (
-                instructions_text is not None
-                and function_tools is not None
-                and output_tools is not None
-            ):
-                break
         return instructions_text, function_tools, output_tools
 
     def _build_synthetic_request(

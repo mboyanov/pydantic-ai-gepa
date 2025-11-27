@@ -196,7 +196,7 @@ async def test_process_case_skips_system_error_trajectory(monkeypatch):
 
 
 @pytest.mark.asyncio
-@time_machine.travel("2023-01-01", tick=False)
+@time_machine.travel("2023-01-01 00:00:00 UTC", tick=False)
 async def test_make_reflective_dataset():
     """Test making a reflective dataset."""
     agent = Agent(
@@ -236,7 +236,7 @@ async def test_make_reflective_dataset():
                                     "type": "user_prompt",
                                     "role": "user",
                                     "content": "Hello",
-                                    "timestamp": "2023-01-01T08:00:00+00:00",
+                                    "timestamp": "2023-01-01T00:00:00+00:00",
                                 }
                             ],
                             "instructions": "Be helpful",
@@ -244,7 +244,7 @@ async def test_make_reflective_dataset():
                         {
                             "kind": "response",
                             "model_name": "test",
-                            "timestamp": "2023-01-01T08:00:00+00:00",
+                            "timestamp": "2023-01-01T00:00:00+00:00",
                             "parts": [
                                 {
                                     "type": "text",

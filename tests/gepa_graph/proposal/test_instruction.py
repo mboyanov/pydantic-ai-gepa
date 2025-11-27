@@ -935,17 +935,13 @@ Use the weather tool to answer questions about weather.
     "function": {
       "name": "get_weather",
       "parameters": {
-        "additionalProperties": false,
+        "type": "object",
         "properties": {
           "location": {
-            "description": "The city name to get weather for.",
-            "type": "string"
+            "type": "string",
+            "description": "The city name to get weather for."
           }
-        },
-        "required": [
-          "location"
-        ],
-        "type": "object"
+        }
       },
       "description": "Get current weather for a location."
     }
